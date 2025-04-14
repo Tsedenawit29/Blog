@@ -29,12 +29,17 @@ public class BlogsService {
     }
 
     public void updateBlogsById(Blogs update, Integer id) {
-        Blogs blogs = blogsRepository.findById(id).orElseThrow(() -> new IllegalStateException(id + " not found"));
-        blogs.setTitle(update.getTitle());
-        blogs.setAuthor(update.getAuthor());
-        blogs.setContent(update.getContent());
-        blogs.setDate(update.getDate());
-        blogs.setImage(update.getImage());
-        blogsRepository.save(update);
+        Blogs existingBlog = blogsRepository.findById(id).orElseThrow(() -> new IllegalStateException(id + " not found"));
+
+        // Update the existing blog with the new data
+        existingBlog.setTitle(update.getTitle());
+        existingBlog.setAuthor(update.getAuthor());
+        existingBlog.setContent(update.getContent());
+        existingBlog.setDate(update.getDate());
+        existingBlog.setImage(update.getImage());
+
+        // Save the updated blog object back to the repository
+        blogsRepository.save(existingBlog);
     }
+
 }

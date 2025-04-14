@@ -15,7 +15,7 @@ function fetchBlogs() {
   fetch(API_URL)
     .then(res => res.json())
     .then(data => {
-      blogList.innerHTML = ''; // Clear the current list before adding new blogs
+      blogList.innerHTML = '';
       data.reverse().forEach(blog => {
         const div = document.createElement('div');
         div.className = 'blog-card';
@@ -32,9 +32,6 @@ function fetchBlogs() {
         `;
         blogList.appendChild(div);
       });
-    })
-    .catch(error => {
-      console.error('Error fetching blogs:', error);
     });
 }
 
@@ -42,20 +39,21 @@ function editBlog(id) {
   fetch(`${API_URL}/${id}`)
     .then(res => res.json())
     .then(blog => {
+      // Pre-fill the form with the blog's current data
       blogIdInput.value = blog.id;
       authorInput.value = blog.author;
       titleInput.value = blog.title;
       contentInput.value = blog.content;
       imageInput.value = blog.image;
-      dateInput.value = blog.date; // Set the date input for editing
-      submitBtn.textContent = 'Update Blog'; // Change button text to "Update Blog"
-      blogForm.classList.remove('hidden'); // Show form
+      dateInput.value = blog.date;
+      submitBtn.textContent = 'Update Blog'; // Change button text
+      blogForm.classList.remove('hidden');
     });
 }
 
 function deleteBlog(id) {
   fetch(`${API_URL}/${id}`, { method: 'DELETE' })
-    .then(() => fetchBlogs()); // Re-fetch blogs after deletion
+    .then(() => fetchBlogs());
 }
 
 blogForm.addEventListener('submit', e => {
@@ -69,6 +67,7 @@ blogForm.addEventListener('submit', e => {
     date: dateInput.value
   };
 
+  // Check if we're updating or adding a new blog
   const method = blogIdInput.value ? 'PUT' : 'POST';
   const url = blogIdInput.value ? `${API_URL}/${blogIdInput.value}` : API_URL;
 
@@ -78,14 +77,15 @@ blogForm.addEventListener('submit', e => {
     body: JSON.stringify(blogData)
   })
     .then(() => {
-      blogForm.reset(); // Reset form
-      blogIdInput.value = ''; // Clear hidden input
-      submitBtn.textContent = 'Submit Blog'; // Reset button text
-      blogForm.classList.add('hidden'); // Hide form again
-      fetchBlogs(); // Re-fetch to display updated list
+      // After successful submit or update, clear the form and refresh the blog list
+      blogForm.reset();
+      blogIdInput.value = '';
+      submitBtn.textContent = 'Submit Blog'; // Reset the button text
+      blogForm.classList.add('hidden');
+      fetchBlogs(); // Refresh the blog list
     })
-    .catch(error => {
-      console.error('Error:', error);
+    .catch(err => {
+      console.error('Error updating/creating blog:', err);
     });
 });
 
@@ -93,4 +93,4 @@ toggleFormBtn.addEventListener('click', () => {
   blogForm.classList.toggle('hidden');
 });
 
-fetchBlogs(); // Initial fetch of blogs
+fetchBlogs();

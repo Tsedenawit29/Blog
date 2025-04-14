@@ -136,3 +136,9 @@ input, textarea, button {
 .actions button:hover {
   background-color: #e65c00;
 }
+.blog-card img {
+  width: 100%; /* Ensures the image spans the entire width */
+  height: auto; /* Keeps the aspect ratio intact */
+  object-fit: contain; /* Ensures the image fits within the container without stretching */
+  max-height: 200px; /* Optional: Limits the height if needed */
+}
