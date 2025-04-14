@@ -2,22 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>KeepBlogs</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 <div class="container">
-    <h1>📝 KeepBlogs</h1>
-    <p class="subtitle">Share your journey. Inspire the world.</p>
+    <div class="header">
+        <h1>📝 KeepBlogs</h1>
+        <p class="subtitle">Share your journey. Inspire the world.</p>
+        <button id="toggleFormBtn">+ Post Blog</button>
+    </div>
 
-    <form id="blogForm">
+    <form id="blogForm" class="hidden">
         <input type="hidden" id="blogId" />
         <input type="text" id="author" placeholder="Author" required />
         <input type="text" id="title" placeholder="Title" required />
         <textarea id="content" placeholder="Content" required></textarea>
         <input type="text" id="image" placeholder="Image URL" />
-        <button type="submit" id="submitBtn">Post Blog</button>
+        <input type="date" id="date" required />
+        <button type="submit" id="submitBtn">Submit Blog</button>
     </form>
 
     <div id="blogList" class="blog-list"></div>
