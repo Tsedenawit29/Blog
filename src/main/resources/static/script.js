@@ -19,12 +19,15 @@ function fetchBlogs() {
       data.reverse().forEach(blog => {
         const div = document.createElement('div');
         div.className = 'blog-card';
+
         div.innerHTML = `
-          <h3>${blog.title}</h3>
-          <p><strong>Author:</strong> ${blog.author}</p>
-          ${blog.image && blog.image !== 'default' ? `<img src="${blog.image}" alt="Blog image"/>` : ''}
-          <p class="date">${blog.date}</p>
-          <p>${blog.content}</p>
+          ${blog.image && blog.image !== 'default' ?
+            `<img src="${blog.image}" alt="Blog image" class="blog-image"/>`
+            : ''}
+          <h3 class="blog-title">${blog.title}</h3>
+          <p class="blog-content"><strong>Author:</strong> ${blog.author}</p>
+          <p class="blog-content">${blog.content}</p>
+          <p class="blog-content"><em>${blog.date}</em></p>
           <div class="actions">
             <button onclick="editBlog(${blog.id})">Edit</button>
             <button onclick="deleteBlog(${blog.id})">Delete</button>
@@ -34,6 +37,7 @@ function fetchBlogs() {
       });
     });
 }
+
 
 function editBlog(id) {
   fetch(`${API_URL}/${id}`)
